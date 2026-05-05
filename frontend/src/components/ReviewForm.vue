@@ -1,36 +1,53 @@
 <template>
-  <q-card>
+  <q-card flat bordered class="review-form-card">
     <q-card-section>
       <q-form @submit="submit">
-        <div class="row q-col-gutter-md q-mb-md">
-          <div class="col-6 col-sm-3 text-center">
-            <div class="text-caption">Nota Geral</div>
-            <StarRating v-model="form.nota_geral" />
-          </div>
-          <div class="col-6 col-sm-3 text-center">
-            <div class="text-caption">Didatica</div>
-            <StarRating v-model="form.nota_didatica" />
-          </div>
-          <div class="col-6 col-sm-3 text-center">
-            <div class="text-caption">Conteudo</div>
-            <StarRating v-model="form.nota_conteudo" />
-          </div>
-          <div class="col-6 col-sm-3 text-center">
-            <div class="text-caption">Dificuldade</div>
-            <StarRating v-model="form.nota_dificuldade" />
+        <!-- Star ratings -->
+        <div class="text-subtitle2 text-weight-medium q-mb-md">Suas notas (1 a 5)</div>
+        <div class="row q-col-gutter-md q-mb-lg">
+          <div v-for="item in ratingFields" :key="item.key" class="col-6 col-sm-3 text-center">
+            <div class="text-caption text-grey-7 q-mb-sm">{{ item.label }}</div>
+            <StarRating v-model="form[item.key]" :size="'md'" />
+            <div v-if="form[item.key] === 0" class="text-caption text-negative q-mt-xs">
+              Obrigatorio
+            </div>
           </div>
         </div>
 
-        <q-input v-model="form.comentario" label="Comentario" type="textarea" outlined
-          :rules="[v => !!v || 'Obrigatorio']" class="q-mb-sm" />
+        <q-separator class="q-mb-md" />
 
-        <q-input v-model="tagsInput" label="Tags (separadas por virgula)" outlined class="q-mb-sm"
-          hint="Ex: projetos praticos, provas dificeis" />
+        <!-- Comment -->
+        <div class="text-subtitle2 text-weight-medium q-mb-sm">Comentario</div>
+        <q-input v-model="form.comentario" type="textarea" outlined
+          placeholder="Conte sobre sua experiencia com esta optativa..."
+          :rules="[v => (v && v.trim().length >= 10) || 'Minimo 10 caracteres']"
+          counter maxlength="1000" class="q-mb-md" />
 
-        <q-toggle v-model="form.anonima" label="Postar como anonimo" class="q-mb-md" />
+        <!-- Tags -->
+        <div class="text-subtitle2 text-weight-medium q-mb-sm">Tags</div>
+        <q-input v-model="tagsInput" outlined
+          placeholder="Ex: projetos praticos, provas dificeis, muita leitura"
+          hint="Separe as tags por virgula" class="q-mb-md" />
 
-        <q-btn type="submit" color="primary" label="Enviar Avaliacao" :loading="loading" />
-        <div v-if="error" class="text-negative q-mt-sm">{{ error }}</div>
+        <!-- Anonymous toggle -->
+        <div class="q-mb-lg">
+          <q-toggle v-model="form.anonima" color="primary" size="md"
+            label="Postar como anonimo" left-label />
+          <div class="text-caption text-grey-6 q-ml-lg" style="padding-left: 44px">
+            Seu nome sera exibido como "Aluno Anonimo" para outros alunos.
+            Administradores ainda poderao ver seu nome real.
+          </div>
+        </div>
+
+        <q-separator class="q-mb-md" />
+
+        <!-- Submit -->
+        <q-btn type="submit" color="primary" label="Enviar Avaliacao"
+          class="full-width" size="md" :loading="loading" no-caps />
+
+        <div v-if="error" class="text-negative text-center q-mt-sm">
+          <q-icon name="error" size="xs" /> {{ error }}
+        </div>
       </q-form>
     </q-card-section>
   </q-card>
@@ -58,13 +75,20 @@ const tagsInput = ref('')
 const loading = ref(false)
 const error = ref('')
 
+const ratingFields = [
+  { key: 'nota_geral', label: 'Nota Geral' },
+  { key: 'nota_didatica', label: 'Didatica' },
+  { key: 'nota_conteudo', label: 'Conteudo' },
+  { key: 'nota_dificuldade', label: 'Dificuldade' },
+]
+
 async function submit() {
   if (!form.nota_geral || !form.nota_didatica || !form.nota_conteudo || !form.nota_dificuldade) {
     error.value = 'Selecione todas as notas'
     return
   }
-  if (!form.comentario.trim()) {
-    error.value = 'Escreva um comentario'
+  if (!form.comentario.trim() || form.comentario.trim().length < 10) {
+    error.value = 'Escreva um comentario com pelo menos 10 caracteres'
     return
   }
   loading.value = true
@@ -86,3 +110,10 @@ async function submit() {
   }
 }
 </script>
+
+<style scoped>
+.review-form-card {
+  border-radius: 12px;
+  border-left: 4px solid #3949ab;
+}
+</style>

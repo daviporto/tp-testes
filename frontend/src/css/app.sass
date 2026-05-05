@@ -1,0 +1,132 @@
+// Global styles
+body
+  background: #f5f5f5
+
+.q-header
+  background: linear-gradient(135deg, #1a237e 0%, #283593 50%, #3949ab 100%) !important
+
+.q-footer
+  background: linear-gradient(135deg, #1a237e 0%, #283593 100%) !important
+  color: rgba(255, 255, 255, 0.7)
+  font-size: 0.85rem
+
+// Toolbar inner container
+.toolbar-inner
+  max-width: 1200px
+  width: 100%
+  margin: 0 auto
+  display: flex
+  align-items: center
+
+// Page layout
+.q-page
+  max-width: 1200px
+  margin: 0 auto
+  width: 100%
+
+  @media (max-width: 600px)
+    padding: 12px !important
+
+// Container for non-q-page wrappers
+.page-wrapper
+  max-width: 1200px
+  margin: 0 auto
+  padding: 24px
+
+  @media (max-width: 600px)
+    padding: 12px
+
+.hero-section
+  background: linear-gradient(135deg, #1a237e 0%, #3949ab 50%, #5c6bc0 100%)
+  color: white
+  padding: 4rem 2rem
+  border-radius: 0 0 32px 32px
+  margin-bottom: 2rem
+
+  @media (max-width: 600px)
+    padding: 2rem 1rem
+    border-radius: 0 0 20px 20px
+
+.hero-inner
+  max-width: 1200px
+  margin: 0 auto
+
+.stat-badge
+  background: rgba(255, 255, 255, 0.15)
+  backdrop-filter: blur(10px)
+  border-radius: 12px
+  padding: 1.25rem
+  text-align: center
+
+  .stat-number
+    font-size: 2rem
+    font-weight: 700
+
+  .stat-label
+    font-size: 0.8rem
+    opacity: 0.8
+    margin-top: 0.25rem
+
+.card-hover
+  transition: transform 0.2s ease, box-shadow 0.2s ease
+
+  &:hover
+    transform: translateY(-4px)
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12)
+
+.skeleton-pulse
+  animation: pulse 1.5s ease-in-out infinite
+
+@keyframes pulse
+  0%, 100%
+    opacity: 1
+  50%
+    opacity: 0.4
+
+.gate-banner
+  border-radius: 12px !important
+  margin-bottom: 1rem
+
+  .q-banner__content
+    align-items: center
+
+.rating-display
+  background: #f8f9fa
+  border-radius: 12px
+  padding: 1.5rem
+  text-align: center
+
+  .rating-number
+    font-size: 2.5rem
+    font-weight: 700
+    color: #1a237e
+
+  .rating-label
+    font-size: 0.8rem
+    color: #666
+    margin-top: 0.25rem
+
+  .rating-stars
+    margin-top: 0.5rem
+
+.fade-enter-active,
+.fade-leave-active
+  transition: opacity 0.3s ease
+
+.fade-enter-from,
+.fade-leave-to
+  opacity: 0
+
+.slide-up-enter-active
+  transition: all 0.3s ease-out
+
+.slide-up-leave-active
+  transition: all 0.2s ease-in
+
+.slide-up-enter-from
+  opacity: 0
+  transform: translateY(20px)
+
+.slide-up-leave-to
+  opacity: 0
+  transform: translateY(-10px)
